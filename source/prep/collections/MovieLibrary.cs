@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace prep.collections
@@ -19,7 +20,16 @@ namespace prep.collections
 
     public void add(Movie movie)
     {
-      throw new NotImplementedException();
+        if (movies.Contains(movie))
+            return;
+
+        foreach (var m in movies)
+        {
+            if (m.title == movie.title)
+                return;
+        }
+
+        movies.Add(movie);
     }
     
     public IEnumerable<Movie> all_movies_published_by_pixar()
@@ -81,5 +91,6 @@ namespace prep.collections
     {
       throw new NotImplementedException();
     }
+
   }
 }
