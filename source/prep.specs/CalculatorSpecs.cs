@@ -13,7 +13,7 @@ namespace prep.specs
 {
   public class CalculatorSpecs
   {
-    public class concern_for_calculator : Observes<Calculator>
+    public class concern_for_calculator : Observes<ICalculate, Calculator>
     {
     }
 
@@ -39,12 +39,33 @@ namespace prep.specs
 
           spec.change(() => Thread.CurrentPrincipal).to(principal);
         };
+
+        Because b = () =>
+          spec.catch_exception(() => sut.shut_off());
+
+        It should_report_inability_to_shut_off = () =>
+          spec.exception_thrown.ShouldBeAn<SecurityException>();
+
+        static IPrincipal principal;
+      }
+
+      public class and_they_are_in_the_correct_security_group
+      {
+        Establish c = () =>
+        {
+          principal = fake.an<IPrincipal>();
+          principal.setup(x => x.IsInRole(Arg<string>.Is.Anything)).Return(true);
+
+          spec.change(() => Thread.CurrentPrincipal).to(principal);
+        };
+
         Because b = () =>
           sut.shut_off();
 
-        It should_throw_a_security_exception = () =>
-          spec.exception_thrown.ShouldBeAn<SecurityException>();
+        It should_not_do_anything = () =>
+        {
 
+        };
         static IPrincipal principal;
       }
     }
