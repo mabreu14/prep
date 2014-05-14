@@ -50,7 +50,9 @@ namespace prep.utility
       this IEnumerable<ItemToMatch> items, IGetAnAttributeValue<ItemToMatch, AttributeType> accessor,
       ExtensionPointConfiguration<ItemToMatch, AttributeType> configuration)
     {
-      throw new NotImplementedException();
+        var ExtensionPoint = new MatcherCreationExtensionPoint<ItemToMatch, AttributeType>(accessor);
+        var criteria = configuration(ExtensionPoint);
+        return items.all_items_matching(criteria);
     }
   }
 }
