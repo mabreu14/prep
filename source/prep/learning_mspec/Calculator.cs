@@ -17,6 +17,7 @@ namespace prep.learning_mspec
       if (first < 0 || second < 0) throw new ArgumentException();
 
       connection.Open();
+	    connection.CreateCommand().ExecuteNonQuery();
       return first + second;
     }
   }
