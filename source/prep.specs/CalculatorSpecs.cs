@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Data;
+using System.Security;
+using System.Security.Principal;
+using System.Threading;
 using developwithpassion.specifications.extensions;
 using developwithpassion.specifications.rhinomocks;
 using Machine.Specifications;
 using prep.learning_mspec;
+using Rhino.Mocks;
 
 namespace prep.specs
 {
@@ -24,6 +28,26 @@ namespace prep.specs
       static IDbConnection connection;
     }
 
+    public class when_shutting_off_the_calculator : concern_for_calculator
+    {
+      public class and_they_are_not_in_the_correct_security_group
+      {
+        Establish c = () =>
+        {
+          principal = fake.an<IPrincipal>();
+          principal.setup(x => x.IsInRole(Arg<string>.Is.Anything)).Return(false);
+
+          spec.change(() => Thread.CurrentPrincipal).to(principal);
+        };
+        Because b = () =>
+          sut.shut_off();
+
+        It should_throw_a_security_exception = () =>
+          spec.exception_thrown.ShouldBeAn<SecurityException>();
+
+        static IPrincipal principal;
+      }
+    }
     public class when_adding_two_numbers : concern_for_calculator
     {
       public class and_they_are_both_positive

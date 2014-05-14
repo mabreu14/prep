@@ -7,7 +7,7 @@ namespace prep.learning_mspec
   {
     IDbConnection connection;
 
-    public Calculator(IDbConnection connection)
+    public Calculator(IDbConnection connection, IDbConnection other)
     {
       this.connection = connection;
     }
@@ -19,6 +19,11 @@ namespace prep.learning_mspec
       connection.Open();
 	    connection.CreateCommand().ExecuteNonQuery();
       return first + second;
+    }
+
+    public void shut_off()
+    {
+      throw new NotImplementedException();
     }
   }
 }
