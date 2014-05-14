@@ -5,18 +5,19 @@ namespace prep.learning_mspec
 {
   public class Calculator
   {
-      public IDbConnection Connection { get; set; }
+    IDbConnection connection;
 
-      public Calculator(IDbConnection connection)
-      {
-          Connection = connection;
-      }
-
-      public int add(int first, int second)
+    public Calculator(IDbConnection connection)
     {
-        Connection.Open();
-        if(first <0 || second <0) throw new ArgumentException();
-	    return first + second;
+      this.connection = connection;
+    }
+
+    public int add(int first, int second)
+    {
+      if (first < 0 || second < 0) throw new ArgumentException();
+
+      connection.Open();
+      return first + second;
     }
   }
 }
