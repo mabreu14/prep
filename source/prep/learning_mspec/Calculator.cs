@@ -15,12 +15,10 @@ namespace prep.learning_mspec
   public class Calculator : ICalculate
   {
     IDbConnection connection;
-    IPrincipal _principal;
 
-    public Calculator(IDbConnection connection, IPrincipal principal)
+    public Calculator(IDbConnection connection)
     {
       this.connection = connection;
-      _principal = principal;
     }
 
     public int add(int first, int second)

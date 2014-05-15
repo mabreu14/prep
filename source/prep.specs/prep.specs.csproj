@@ -81,6 +81,7 @@
   <ItemGroup>
     <Compile Include="CalculatorSpecs.cs" />
     <Compile Include="MovieLibrarySpecs.cs" />
+    <Compile Include="ReadOnlySetSpecs.cs" />
     <Compile Include="utility\CollectionExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
